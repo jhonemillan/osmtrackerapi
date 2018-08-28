@@ -13,13 +13,13 @@ module.exports = function(passport){
   }));
   
   router.get('/auth/google/callback',
-  passport.authenticate('google', {failureRedirect:'/', failureFlash: true}),
+  passport.authenticate('google', {failureRedirect:'/login', failureFlash: true}),
   (req, res) => {
     console.log(req.user.token);
     req.session.token = req.user.token;        
     req.session.user = req.user.profile.displayName;
     
-    return res.redirect('http://localhost:4200/map');
+    return res.redirect('http://localhost:4200/map/?gId=' + req.user.profile.id);
   }
 );
 
