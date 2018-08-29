@@ -19,7 +19,7 @@ module.exports = function(passport){
     req.session.token = req.user.token;        
     req.session.user = req.user.profile.displayName;
     
-    return res.redirect('http://localhost:4200/map/?gId=' + req.user.profile.id);
+    return res.redirect('http://localhost:4200/map/' + req.user.profile.id);
   }
 );
 
