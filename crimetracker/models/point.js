@@ -4,9 +4,9 @@ var GeoJSON = require('mongoose-geojson-schema');
 let Schema = mongoose.Schema;
 
 var pointSchema = new Schema({
-    email: {
+    id: {
       type: String,
-      unique: true,
+      unique: false,
       required: true
     },
     comment: {
