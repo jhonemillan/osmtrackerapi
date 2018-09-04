@@ -4,7 +4,7 @@ var GeoJSON = require('mongoose-geojson-schema');
 let Schema = mongoose.Schema;
 
 var pointSchema = new Schema({
-    id: {
+    user_id: {
       type: String,
       unique: false,
       required: true
@@ -15,8 +15,10 @@ var pointSchema = new Schema({
     },
     
     location: {
-        type: Point,
+        type: 'Point',
         required: true
     }
 
   });
+
+  module.exports = mongoose.model('geopoints', pointSchema);

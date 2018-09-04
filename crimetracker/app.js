@@ -10,6 +10,7 @@ var passport = require('passport');
 let auth = require('./config/passport');
 var indexRouter = require('./routes/index')(passport);
 var usersRouter = require('./routes/users');
+var mapRouter = require('./routes/map');
 
 auth(passport);
 
@@ -28,8 +29,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/map', mapRouter);
 
-
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/crimetracker', { promiseLibrary: require('bluebird') })
+  .then(() =>  console.log('connection succesful'))
+  .catch((err) => console.error(err));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
