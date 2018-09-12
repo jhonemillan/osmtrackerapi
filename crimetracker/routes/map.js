@@ -13,7 +13,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next){
-    Point.create(req.body)
+    console.log(req.body);
+    Point.create({ user_id: req.body.user_id,
+                  comment: req.body.comment,
+                  location: req.body.geolocation.geometry
+                 })
     .then((point)=>{
         res.json(point);
     })
