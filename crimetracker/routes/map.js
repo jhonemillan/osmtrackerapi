@@ -13,16 +13,23 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next){
-    console.log(req.body);
+    console.log(req.body.geolocation);
     Point.create({ user_id: req.body.user_id,
                   comment: req.body.comment,
-                  location: req.body.geolocation.geometry
+                  location: req.body.geolocation
                  })
     .then((point)=>{
         res.json(point);
     })
     .catch((err)=>{
         return next(err);
+    });
+});
+
+router.get('/getpoints', (req, res, next)=>{
+    Point.find({ location: { $geoWithin: { $geometry: req.body.geometry }}})
+    .then((listPoints)=>{
+        res.json(listPoints);
     });
 });
 

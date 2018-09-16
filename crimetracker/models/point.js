@@ -13,11 +13,20 @@ var pointSchema = new Schema({
       type: String,
       required: true
     },
-    
+
     location: {
+      type: 'Feature',
+      properties: {},
+      geometry: {
         type: 'Point',
-        required: true
+        coordinates: []
+      }
     }
+    
+    // location: {
+    //     type: 'Point',
+    //     required: true
+    // }
 
   });
 
