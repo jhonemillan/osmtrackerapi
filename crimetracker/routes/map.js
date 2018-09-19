@@ -26,9 +26,14 @@ router.post('/add', function(req, res, next){
     });
 });
 
-router.get('/getpoints', (req, res, next)=>{
-    Point.find({ location: { $geoWithin: { $geometry: req.body.geometry }}})
+router.post('/getpoints/', (req, res, next)=>{
+    console.log(req.body.geometry.coordinates);
+    Point.find({ location: { $geoWithin: { $box: [
+        req.body.geometry.coordinates[0],
+        req.body.geometry.coordinates[1]
+    ] }}})
     .then((listPoints)=>{
+        console.log(listPoints);
         res.json(listPoints);
     });
 });
