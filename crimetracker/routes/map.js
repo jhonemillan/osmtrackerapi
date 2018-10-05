@@ -13,10 +13,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next){
-    console.log(req.body.geolocation);
+    console.log(req.body);
     Point.create({ user_id: req.body.user_id,
                   comment: req.body.comment,
-                  location: req.body.geolocation
+                  location: req.body.location
                  })
     .then((point)=>{
         res.json(point);
@@ -72,7 +72,7 @@ router.get('/near',(req, res)=>{
 router.get('/all', (req, res)=>{
     Point.find({})
     .then((data)=>{
-        console.log(data[0].location.geometry.coordinates);
+        res.json(data);
     })
 });  
 

@@ -5,16 +5,10 @@ let Schema = mongoose.Schema;
 
 var pointSchema = new Schema({    
     location:{      
-      geometry : {        
-        coordinates : {
-            type : [Number],           
-            required : true
-        },
-        type: {type: String},
+      type: {type: String},
+      lat: {type: Number},
+      lng: {type: Number}  
     },
-    type: {type: String}
-    },
-
     user_id: {
       type: String,
       unique: false,
