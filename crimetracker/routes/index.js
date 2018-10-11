@@ -15,13 +15,18 @@ module.exports = function(passport){
   router.get('/auth/google/callback',
   passport.authenticate('google', {failureRedirect:'/login', failureFlash: true}),
   (req, res) => {
-    console.log(req.user.token);
-    req.session.token = req.user.token;        
-    req.session.user = req.user.profile.displayName;
-    
-    return res.redirect('http://localhost:4200/map/' + req.user.profile.id);
+    console.log(req.user.id);
+    req.session.user = req.user;
+    console.log(req.session.user,'================');
+    return res.redirect('http://localhost:4200/map/' + req.user.id);
   }
 );
+
+router.get('/auth/getuser',
+      passport.authorize('google', { failureRedirect: '/login' }),
+      (req, res)=>{
+  return res.json(req.user);
+})
 
 router.get('/logout', (req, res) => {
   req.logout();
@@ -29,17 +34,14 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-function isLoggedIn(req, res, next) {
-  console.log(req.isAuthenticated());
-  // if user is authenticated in the session, carry on
-  if (req.session.token)
-  {
-    return next();
-  }  
-  // if they aren't redirect them to the home page
-  res.redirect('/');
-}
-
+router.get('/me',
+  passport.authenticate('google', {failureFlash: true}),
+  (req, res) => {
+    console.log(req.user.id);
+    req.session.user = req.user;
+    return res.status(200).json(req.user);
+  }
+);
 return router;
 
 }

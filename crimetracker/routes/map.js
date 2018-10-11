@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
   });  
 });
 
-router.post('/add', function(req, res, next){
+router.post('/add',ensureUnauthenticated,  function(req, res, next){
     console.log(req.body);
     Point.create({ user_id: req.body.user_id,
                   comment: req.body.comment,
@@ -69,7 +69,7 @@ router.get('/near',(req, res)=>{
     });
 });
 
-router.get('/all', (req, res)=>{
+router.get('/all', ensureUnauthenticated, (req, res)=>{
     Point.find({})
     .then((data)=>{
         res.json(data);
@@ -92,6 +92,11 @@ router.get('/neartemp',(req, res)=>{
         console.log('null data',data);
     });
 });
+
+function ensureUnauthenticated(req, res, next) {
+    console.log(req.session.user);
+    next();
+  }
 
 
 

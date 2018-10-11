@@ -14,9 +14,6 @@ module.exports = (passport) => {
             callbackURL: private.googleAuth.callbackURL
         },
         (token, refreshToken, profile, done) => {
-            return done(null, {
-                profile: profile,
-                token: token
-            });
+            return done(null, profile);
         }));
 };

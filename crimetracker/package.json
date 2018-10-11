@@ -12,6 +12,8 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "helmet": "^3.14.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
     "mongoose": "^5.2.9",
