@@ -3,10 +3,10 @@ var router = express.Router();
 
 module.exports = function(passport){
   
-  /* GET home page. */
-  router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
-  });
+//   /* GET users listing. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
   
   router.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
@@ -14,11 +14,9 @@ module.exports = function(passport){
   
   router.get('/auth/google/callback',
   passport.authenticate('google', {failureRedirect:'/login', failureFlash: true}),
-  (req, res) => {
-    console.log(req.user.id);
-    req.session.user = req.user;
-    console.log(req.session.user,'================');
-    return res.redirect('http://localhost:4200/map/' + req.user.id);
+  (req, res) => {    
+    req.session.user = req.user;    
+    return res.redirect('/map/' + req.user.id);
   }
 );
 

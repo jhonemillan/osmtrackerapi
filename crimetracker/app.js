@@ -15,10 +15,6 @@ var helmet = require('helmet');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,28 +26,28 @@ app.use( session({
   name : 'sessionId',
  })
 );
+var mongoose = require('./config/db');
 let auth = require('./config/passport');
 auth(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/map', mapRouter);
-
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/crimetracker', { promiseLibrary: require('bluebird') })
-        .then(() =>  console.log('connection succesful'))
-        .catch((err) => console.error(err));
 
 app.use(function(req, res, next) {
   next(createError(404));
 });
+app.use(express.static(__dirname + '/dist/'));
+app.set('view engine', 'html');
 
+
+app.get('/favicon.ico', (req, res) => res.status(204));
+
+app.get('*', function(req, res, next) {
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -60,7 +56,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  
 });
+
+
 
 module.exports = app;
