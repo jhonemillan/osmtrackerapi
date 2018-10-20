@@ -18,6 +18,11 @@ var pointSchema = new Schema({
     comment: {
       type: String,
       required: true
+    },
+
+    date:{
+      type: Date,
+      required: true
     }
   });
 

@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
   passport.authenticate('google', {failureRedirect:'/login', failureFlash: true}),
   (req, res) => {    
     req.session.user = req.user;    
-    return res.redirect('/map/' + req.user.id);
+    return res.redirect('http://localhost:4200/map/' + req.user.id);
   }
 );
 

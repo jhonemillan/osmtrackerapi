@@ -12,14 +12,12 @@ router.get('/', function(req, res, next) {
   });  
 });
 
-router.get('/:id',ensureUnauthenticated, function(req, res, next){
-    res.json('test');
-})
 
 router.post('/add',ensureUnauthenticated,  function(req, res, next){
     console.log(req.body);
     Point.create({ user_id: req.body.user_id,
                   comment: req.body.comment,
+                  date: req.body.date,
                   location: req.body.location
                  })
     .then((point)=>{
